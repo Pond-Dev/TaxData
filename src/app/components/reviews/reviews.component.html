@@ -1,0 +1,101 @@
+<div [style]="{ width: '80%', margin: '0px auto' }">
+  <p-card [style]="{ border: '1px solid black', margin: '25px 0px' }">
+    <div style="border-bottom: 1px solid black">
+      <h3>Tax Filing Details</h3>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-3">
+        <h3>Type of Filing</h3>
+      </div>
+      <div class="p-col-12 p-md-6 p-lg-3">
+        <p>{{ taxData.filingType }}</p>
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-3">
+        <h3>Vat Month</h3>
+      </div>
+      <div class="p-col-12 p-md-6 p-lg-3">
+        <p>
+          {{ taxData.selectedMonth.name + " " + taxData.selectedYear.name }}
+        </p>
+      </div>
+    </div>
+    <div style="border-bottom: 1px solid black">
+      <h3>Tax Computation</h3>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-6">
+        <h3>Total value of taxable electronic service exclusive of Vat</h3>
+      </div>
+      <div class="p-col hidden"></div>
+      <div class="p-col">
+        <p>{{ taxData.saleAmount | number }} <span>THB</span></p>
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-6">
+        <h3>Total Vat to be remitted</h3>
+        <p>
+          (7% of Total value of taxable electronic service exclusive of Vat)
+        </p>
+      </div>
+      <div class="p-col hidden"></div>
+      <div class="p-col">
+        <p>{{ taxData.taxAmount | number }} <span>THB</span></p>
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-6">
+        <h3>Total amount Payable</h3>
+      </div>
+      <div class="p-col hidden"></div>
+      <div class="p-col">
+        <p>{{ taxData.totalAmount | number }} <span>THB</span></p>
+      </div>
+    </div>
+    <div style="border-bottom: 1px solid black">
+      <h3>Tax Filing Details</h3>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12">
+        <h4>
+          I hereby certify that information given above are true and correct and
+          agree to be bound by such information
+        </h4>
+      </div>
+    </div>
+  </p-card>
+  <div class="p-grid">
+    <div class="p-col-fixed">
+      <button
+        pButton
+        type="button"
+        label="Back"
+        class="p-button-outlined p-button-rounded"
+        (click)="onClickBack()"
+      ></button>
+    </div>
+    <div class="p-col"></div>
+    <div class="p-col-fixed">
+      <button
+        pButton
+        type="button"
+        label="Confirm & Submit"
+        class="p-button-rounded"
+        (click)="onClickConfirm()"
+      ></button>
+    </div>
+  </div>
+  <p-dialog
+    header="taxData"
+    [(visible)]="displayDialog"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+    [style]="{ width: '50vw' }"
+    [modal]="true"
+  >
+    <div class="p-grid">
+      <div class="p-col-12">{{ taxData | json }}</div>
+    </div>
+  </p-dialog>
+</div>

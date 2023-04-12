@@ -1,0 +1,210 @@
+<div [style]="{ width: '80%', margin: '0px auto' }">
+  <p-card [style]="{ margin: '25px 0px', border: '1px solid black' }">
+    <div style="border-bottom: 1px solid black">
+      <h3>1. Tax Filing Details</h3>
+    </div>
+    <div>
+      <h4>Type of filing <span style="color: red">*</span></h4>
+      <div class="p-grid">
+        <div class="p-col-12 p-md-6 p-lg-3">
+          <p-radioButton
+            name="radioGroup"
+            value="Ordinary Filing"
+            [(ngModel)]="filingType"
+            label="Ordinary Filing"
+          ></p-radioButton>
+        </div>
+        <div class="p-col-12 p-md-6 p-lg-3">
+          <p-radioButton
+            name="radioGroup"
+            value="Additional Filing"
+            [(ngModel)]="filingType"
+            label="Additional Filing"
+          ></p-radioButton>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="p-grid">
+        <div class="p-col-12 p-md-6 p-lg-6">
+          <h4>Vat Month <span style="color: red">*</span></h4>
+          <div class="p-grid">
+            <div class="p-col-12 p-md-6 p-lg-6">
+              <p-dropdown
+                [style]="{ width: '200px' }"
+                [options]="monthOption"
+                [(ngModel)]="selectedMonth"
+                optionLabel="name"
+              ></p-dropdown>
+            </div>
+            <div class="p-col-12 p-md-6 p-lg-6">
+              <p-dropdown
+                [style]="{ width: '200px' }"
+                [options]="yearOption"
+                [(ngModel)]="selectedYear"
+                optionLabel="name"
+              ></p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div
+          class="p-col-12 p-md-6 p-lg-6"
+          *ngIf="filingType === 'Additional Filing'"
+        >
+          <h4>Type <span style="color: red">*</span></h4>
+          <div class="p-grid">
+            <div class="p-col-12 p-md-6 p-lg-6">
+              <p-dropdown
+                [style]="{ width: '200px' }"
+                *ngIf="filingType === 'Additional Filing'"
+                [options]="typeOption"
+                [(ngModel)]="selectedType"
+                optionLabel="name"
+              ></p-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="border-bottom: 1px solid black" class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-6">
+        <h3>2. Tax Computation</h3>
+      </div>
+      <div class="p-col hidden"></div>
+      <div class="p-col-fixed">
+        <h5 id="viewExchangeRate" (click)="onClickViewExchangeRate()">
+          View Exchange Rate
+        </h5>
+      </div>
+    </div>
+
+    <div>
+      <h4>
+        Provide total value taxable electronic service
+        <span style="color: red">*</span>
+      </h4>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-6">
+        <p>1. underdeclared Thai taxable electronic service</p>
+      </div>
+      <div class="p-col hidden"></div>
+      <div class="p-col">
+        <p-inputNumber
+          [min]="0"
+          [allowEmpty]="false"
+          [(ngModel)]="saleAmount"
+          suffix=" THB"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          (onBlur)="onBlurSaleAmount()"
+        ></p-inputNumber>
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-6">
+        <p>2. total VAT to be remitted (7% of 1.)</p>
+      </div>
+      <div class="p-col hidden"></div>
+      <div class="p-col">
+        <p-inputNumber
+          [min]="0"
+          [allowEmpty]="false"
+          [(ngModel)]="taxAmount"
+          suffix=" THB"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          (onBlur)="onBlurTaxAmount()"
+        ></p-inputNumber>
+      </div>
+    </div>
+
+    <div>
+      <h4>In case of late filing and payment, or additional filing</h4>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-6">
+        <p>3. SurCharge</p>
+      </div>
+      <div class="p-col hidden"></div>
+      <div class="p-col">
+        <p-inputNumber
+          [min]="0"
+          [allowEmpty]="false"
+          [(ngModel)]="surCharge"
+          suffix=" THB"
+          [disabled]="true"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+        ></p-inputNumber>
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-6">
+        <p>4. Penalty</p>
+      </div>
+      <div class="p-col hidden"></div>
+      <div class="p-col">
+        <p-inputNumber
+          [min]="0"
+          [allowEmpty]="false"
+          [(ngModel)]="penalty"
+          suffix=" THB"
+          [disabled]="true"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+        ></p-inputNumber>
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-6">
+        <p>
+          5. Total amount of VAT, surcharge, and penalty to be remitted (2.+ 3.+
+          4.)
+        </p>
+      </div>
+      <div class="p-col hidden"></div>
+      <div class="p-col">
+        <p-inputNumber
+          [min]="0"
+          [allowEmpty]="false"
+          [(ngModel)]="totalAmount"
+          suffix=" THB"
+          [disabled]="true"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+        ></p-inputNumber>
+      </div>
+    </div>
+  </p-card>
+  <div class="p-grid">
+    <div class="p-col"></div>
+    <div class="p-col-fixed">
+      <button
+        pButton
+        type="button"
+        label="Next"
+        class="p-button-rounded"
+        (click)="onClickNext()"
+      ></button>
+    </div>
+  </div>
+
+  <p-dialog
+    header="Invalid"
+    [(visible)]="displayDialog"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+    [style]="{ width: '50vw' }"
+    [modal]="true"
+  >
+    <div class="p-grid">
+      <div class="p-col-12" *ngIf="invalid.saleAmount">
+        {{ invalid.saleAmount }}
+      </div>
+      <div class="p-col-12" *ngIf="invalid.month">{{ invalid.month }}</div>
+      <div class="p-col-12" *ngIf="invalid.taxAmount">
+        {{ invalid.taxAmount }}
+      </div>
+    </div>
+  </p-dialog>
+</div>
